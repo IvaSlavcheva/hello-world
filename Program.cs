@@ -1,29 +1,45 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Dynamic;
-using System.Linq;
-using System.Runtime.ConstrainedExecution;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Linq;
 
-namespace Project1
+List<int> nums = Console.ReadLine().Split(' ').Select(int.Parse).ToList();    
+int indexPosition = int.Parse(Console.ReadLine());
+int damage = 1;
+string stopWord = "Supernova";
+
+do
 {
-    internal class Program
+    List<string> input = Console.ReadLine().Split(' ').ToList();
+    string directions = input[0];
+    if (directions == stopWord)
     {
-        static void Main(string[] args)
-        {
-            string brand = Console.ReadLine();
-            double initialPrice = double.Parse(Console.ReadLine());
-            double days = double.Parse(Console.ReadLine());
-
-            double taxes = (20.0 / 100.0) * initialPrice;
-            double priceAfterTaxes = initialPrice + taxes + 275;
-            double resellValue = priceAfterTaxes +(days*20);
-          
-            double profit = (15.0 / 100.0) * resellValue;
-            Console.WriteLine($"The {brand} with initial price of {initialPrice} BGN will sell for {resellValue} BGN ");
-            Console.WriteLine($"Profit {profit} BGN");
-        }
+        break;
     }
+    int steps = int.Parse(input[1]);
+    for (int i = 0; i < steps; i++)
+    {
+        if (directions == "right")
+        {
+            indexPosition++;
+            if (indexPosition>=nums.Count)
+            {
+                indexPosition = 0;
+                damage++;
+            }
+            nums[indexPosition] -= damage;
+        }
+        else if (directions == "left")
+        {
+            indexPosition--;
+            if (indexPosition < 0)
+            {
+                indexPosition = nums.Count-1;
+                damage++;   
+            }
+            nums[indexPosition] -= damage ;
+        }
+     
+    }
+} while (true);
+for (int i = 0; i < nums.Count; i++)
+{
+    Console.Write(nums[i]+ " ");
 }
